@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" class="dark"> <head>
+<html lang="ru" class="dark">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Mirra Hub</title>
@@ -50,7 +51,6 @@
             </div>
         </header>
 
-        <!-- بخش صفحه اصلی ابزارها -->
         <main id="screen-home" class="flex-1 px-5 pt-5 pb-28 overflow-y-auto no-scrollbar block">
             
             <div class="bg-gradient-to-br from-white to-slate-100 dark:from-zinc-900 dark:to-zinc-950 rounded-[2rem] p-6 border border-slate-200 dark:border-zinc-800 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-none relative overflow-hidden mb-6">
@@ -99,15 +99,13 @@
             </div>
         </main>
 
-        <!-- بخش صفحه اختصاصی تسک‌ها (جدید) -->
         <main id="screen-tasks" class="flex-1 px-5 pt-5 pb-28 overflow-y-auto no-scrollbar hidden">
             <div class="mb-6">
                 <h2 id="txt-tasks-title" class="text-xl font-extrabold text-slate-900 dark:text-white tracking-wide mono-font">Выполнение заданий</h2>
-                <p id="txt-tasks-desc" class="text-xs text-slate-500 dark:text-zinc-400 mt-1">Подпишитесь بر روی کانال‌های زیر تا قفل ابزارها باز شود.</p>
+                <p id="txt-tasks-desc" class="text-xs text-slate-500 dark:text-zinc-400 mt-1">Подпишитесь на каналы ниже, чтобы открыть доступ.</p>
             </div>
 
             <div class="space-y-4">
-                <!-- کارت تسک کانال دینامیت -->
                 <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-900 p-5 rounded-[1.5rem] flex flex-col justify-between shadow-sm">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center space-x-3">
@@ -134,7 +132,6 @@
             </div>
         </main>
 
-        <!-- منوی ناوبری پایین صفحه توسعه یافته با تب تسک -->
         <nav class="absolute bottom-0 left-0 right-0 border-t border-slate-200 dark:border-zinc-900 pt-3 pb-safe px-4 flex justify-between items-center z-40 bg-white/90 dark:bg-black/90 backdrop-blur-xl">
             <button class="nav-button flex flex-col items-center space-y-1.5 text-red-600 dark:text-red-500 w-14" onclick="handleNavigationSwitch(this, 'home')">
                 <div class="p-2 rounded-2xl bg-red-50 dark:bg-red-500/10 mb-0.5 active-bg-holder transition-colors">
@@ -186,9 +183,8 @@
         </div>
     </div>
 
-    <!-- مودال جوین اجباری لود اولیه -->
     <div id="forceJoinModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md hidden">
-        <div class="bg-white dark:bg-zinc-900 p-8 rounded-[2rem] text-center max-w-xs border border-zinc-800 shadow-2xl">
+        <div class="bg-white dark:bg-zinc-900 p-8 rounded-[2rem] text-center max-w-xs border border-slate-200 dark:border-zinc-800 shadow-2xl">
             <h2 class="text-xl font-bold text-red-500 mb-4">Доступ ограничен</h2>
             <p class="text-sm text-zinc-400 mb-6">Подпишитесь на канал @dinamit, чтобы использовать инструменты.</p>
             <button onclick="window.open('https://t.me/dinamit', '_blank')" class="w-full bg-red-600 text-white py-3 rounded-full font-bold mb-3 active:scale-95 transition-transform">Подписаться</button>
@@ -202,12 +198,14 @@
         let searchQuery = '';
         let activeRefTab = 'week';
         let isDarkMode = true;
+        
+        // آدرس اندپوینت سرور ریلوای شما
         const BACKEND_URL = "https://mirrabacked-production.up.railway.app/check-join";
 
         const localizationData = {
             ru: {
                 banner_title: "Добро пожаловать",
-                banner_desc: "Универсальный хаб инструментов для OSINT, автоматизации ботов и приватных скриپтов. Оптимизируйте свои задачи в один клик.",
+                banner_desc: "Универсальный хаб инструментов для OSINT, автоматизации ботов и приватных скриптов. Оптимизируйте свои задачи в один клик.",
                 search_placeholder: "Поиск инструментов...",
                 all: "Все", osint: "OSINT", bots: "Боты", scripts: "Скрипты",
                 total_base: "Вся база", top_ref: "Топ рефералов", top_sub: "За неделю и за всё время",
@@ -252,25 +250,28 @@
             ]
         };
 
-        function initApp() {
-            updateThemeIcon();
-            renderDynamicCategories();
-            renderDynamicToolsGrid();
-            renderReferralsList();
-            applyLanguageStrings();
-        }
-
-        // --- اسکریپت بک‌اند برای چک‌کردن اشتراک ---
-        async function getTelegramUser() {
-            const tg = window.Telegram.WebApp;
-            return tg.initDataUnsafe?.user || null;
-        }
-
-        async function checkInitialSubscription() {
-            const user = await getTelegramUser();
-            if (!user) return;
+        // هندل مطمئن دریافت شناسه کاربر تلگرام بدون کرش
+        function getTelegramUserId() {
             try {
-                const response = await fetch(`${BACKEND_URL}?user_id=${user.id}`);
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const tg = window.Telegram.WebApp;
+                    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                        return tg.initDataUnsafe.user.id;
+                    }
+                }
+            } catch (e) {
+                console.error("Error reading Telegram Data:", e);
+            }
+            return 123456789; // شناسه تست برای شبیه‌ساز مرورگر
+        }
+
+        // بررسی وضعیت عضویت در زمان باز شدن اولیه مینی‌اپ
+        async function checkInitialSubscription() {
+            const userId = getTelegramUserId();
+            try {
+                const response = await fetch(`${BACKEND_URL}?user_id=${userId}`);
+                if (!response.ok) throw new Error("API Failure");
+                
                 const data = await response.json();
                 if (data.is_member) {
                     document.getElementById('forceJoinModal').classList.add('hidden');
@@ -279,37 +280,39 @@
                     document.getElementById('forceJoinModal').classList.remove('hidden');
                 }
             } catch (e) {
-                console.error(e);
+                console.error("Initial validation check error:", e);
+                document.getElementById('forceJoinModal').classList.remove('hidden');
             }
         }
 
-        // بررسی اختصاصی تسک در صفحه تسک‌ها
+        // بررسی وضعیت عضویت هنگام کلیک روی دکمه چکینگ صفحه تسک‌ها
         async function checkTaskSubscription() {
-            const user = await getTelegramUser();
-            if (!user) {
-                alert(currentLang === 'ru' ? "Запустите мини-приложение в Telegram" : "Run Mini App inside Telegram");
-                return;
-            }
+            const userId = getTelegramUserId();
+            triggerSystemAlert(currentLang === 'ru' ? "Проверяю..." : "Checking...");
 
             try {
-                const response = await fetch(`${BACKEND_URL}?user_id=${user.id}`);
+                const response = await fetch(`${BACKEND_URL}?user_id=${userId}`);
+                if (!response.ok) throw new Error("API Connection Error");
+                
                 const data = await response.json();
 
                 if (data.is_member) {
                     updateTaskBadgeStatus(true);
+                    document.getElementById('forceJoinModal').classList.add('hidden'); 
                     alert(currentLang === 'ru' ? "Успешно! Спасибо за подписку." : "Success! Thanks for subscribing.");
                 } else {
                     updateTaskBadgeStatus(false);
                     alert(currentLang === 'ru' ? "Вы еще не подписались на канал." : "You haven't joined the channel yet.");
                 }
             } catch (e) {
-                console.error(e);
-                alert(currentLang === 'ru' ? "Ошибка связи с сервером" : "Server communication link failure");
+                console.error("Task check failed:", e);
+                alert(currentLang === 'ru' ? "Ошибка связи с сервером" : "Error connecting to backend server");
             }
         }
 
         function updateTaskBadgeStatus(isJoined) {
             const badge = document.getElementById('taskStatusBadge');
+            if (!badge) return;
             if (isJoined) {
                 badge.className = "bg-green-500/10 text-green-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider mono-font";
                 badge.innerText = currentLang === 'ru' ? "Выполнено" : "Completed";
@@ -319,7 +322,7 @@
             }
         }
 
-        // --- THEME ENGINE ---
+        // سیستم مدیریت پوسته تیره و روشن (Theme Engine)
         function toggleTheme() {
             isDarkMode = !isDarkMode;
             if(isDarkMode) { document.documentElement.classList.add('dark'); } 
@@ -353,7 +356,6 @@
             document.getElementById('nav-lbl-priv').innerText = data.nav_priv;
             document.getElementById('nav-lbl-profile').innerText = data.nav_profile;
             
-            // المان‌های جدید تسک
             document.getElementById('txt-tasks-title').innerText = data.tasks_title;
             document.getElementById('txt-tasks-desc').innerText = data.tasks_desc;
             document.getElementById('nav-lbl-tasks').innerText = data.nav_tasks;
@@ -485,7 +487,7 @@
             setTimeout(() => { box.classList.add('hidden'); }, 3000);
         }
 
-        // مدیریت تغییر صفحات مینی‌اپ
+        // سیستم مدیریت سوییچ منوها و صفحات با متد اتمیک ساختار تب‌بار
         function handleNavigationSwitch(element, targetScreen) {
             document.querySelectorAll('.nav-button').forEach(btn => {
                 btn.classList.remove('text-red-600', 'dark:text-red-500');
@@ -499,7 +501,6 @@
             element.querySelector('.active-bg-holder').classList.remove('bg-transparent');
             element.querySelector('.active-bg-holder').classList.add('bg-red-50', 'dark:bg-red-500/10');
             
-            // مدیریت پنهان/آشکارسازی سکشن‌ها
             if (targetScreen === 'home') {
                 document.getElementById('screen-home').classList.replace('hidden', 'block');
                 document.getElementById('screen-tasks').classList.replace('block', 'hidden');
@@ -507,16 +508,23 @@
                 document.getElementById('screen-home').classList.replace('block', 'hidden');
                 document.getElementById('screen-tasks').classList.replace('hidden', 'block');
             } else {
-                // بقیه صفحات فرضی سیستم الرت نشان می‌دهند
                 document.getElementById('screen-home').classList.replace('block', 'hidden');
                 document.getElementById('screen-tasks').classList.replace('block', 'hidden');
                 triggerSystemAlert(currentLang === 'ru' ? `Экран: ${targetScreen}` : `Screen: ${targetScreen}`);
             }
         }
 
+        function initApp() {
+            updateThemeIcon();
+            renderDynamicCategories();
+            renderDynamicToolsGrid();
+            renderReferralsList();
+            applyLanguageStrings();
+        }
+
         window.onload = () => { 
             initApp(); 
-            checkInitialSubscription(); 
+            setTimeout(checkInitialSubscription, 500); 
         };
     </script>
 </body>
