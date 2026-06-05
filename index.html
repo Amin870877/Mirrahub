@@ -199,9 +199,8 @@
         let activeRefTab = 'week';
         let isDarkMode = true;
         
-        // سیستم داینامیک: تشخیص هوشمند آدرس دامنه‌ی فعلی بدون وابستگی به متغیرهای سخت افزاری یا کش قدیمی
-        const currentOrigin = window.location.origin;
-        const BACKEND_URL = `${currentOrigin}/check-join`;
+        // 🔗 اتصال مستقیم و تضمینی فرانت‌اند به دامنه‌ی اصلی و تاییدشده‌ی بکند پایتون شما
+        const BACKEND_URL = "https://mirrabacked-production.up.railway.app/check-join";
 
         const localizationData = {
             ru: {
@@ -235,7 +234,7 @@
         const toolsDatabase = [
             { id: 1, category: 'osint', title: { ru: 'Tookie Tracker', en: 'Tookie Tracker' }, subtitle: { ru: 'Поиск по никнейму', en: 'Search by alias' }, desc: { ru: 'Глубокий поиск учетных записей и связанных цифровых следов по открытым API соцсетей.', en: 'Deep parsing of accounts and connected social signatures.' }, downloads: '942', likes: 142, image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&auto=format&fit=crop&q=60' },
             { id: 2, category: 'bots', title: { ru: 'TG Smart Mailer', en: 'TG Smart Mailer' }, subtitle: { ru: 'Автоматизация рассылок', en: 'Mailing execution' }, desc: { ru: 'Модуль для безопасной рассылки структурированных уведомлений по целевым группам и логам.', en: 'Advanced background engine built for safe bulk-notifications.' }, downloads: '1.4k', likes: 218, image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=400&auto=format&fit=crop&q=60' },
-            { id: 3, category: 'scripts', title: { ru: 'GitHub Scraper Pro', en: 'GitHub Scraper' }, subtitle: { ru: 'Парсер репозиториев', en: 'Repository leak looker' }, desc: { ru: 'Высокоскоростной скрипт для сканирования открытых репозиториев на наличие забытых API ключей.', en: 'High-speed module tailored to hunt leak matrices.' }, downloads: '531', likes: 384, image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=400&auto=format&fit=crop&q=60' },
+            { id: 3, category: 'scripts', title: { ru: 'GitHub Scraper Pro', en: 'GitHub Scraper' }, subtitle: { ru: 'Парсер репозиториев', en: 'Repository leak looker' }, desc: { ru: 'Высокоскоростной скрипت для сканирования открытых репозиториев на наличие забытых API ключей.', en: 'High-speed module tailored to hunt leak matrices.' }, downloads: '531', likes: 384, image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=400&auto=format&fit=crop&q=60' },
             { id: 4, category: 'osint', title: { ru: 'Phone Investigator', en: 'Phone Inspector' }, subtitle: { ru: 'Анализ номеров', en: 'Mobile vector parsing' }, desc: { ru: 'Проверка сотовых номеров на предмет утечек баз данных, привязанных мессенджеров и регионов.', en: 'Cross-analyzing cell numbers against database exposure.' }, downloads: '319', likes: 89, image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=60' },
             { id: 5, category: 'scripts', title: { ru: 'Elite Proxy Grabber', en: 'Proxy Grabber' }, subtitle: { ru: 'Сборник прокси', en: 'Proxy list compiler' }, desc: { ru: 'Автоматический сбор и проверка рабочих SOCKS5 и HTTP прокси из закрытых источников.', en: 'Automated scraping and checking of working SOCKS5/HTTP.' }, downloads: '2.1k', likes: 412, image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&auto=format&fit=crop&q=60' }
         ];
@@ -262,7 +261,7 @@
             } catch (e) {
                 console.error("Error reading Telegram Data:", e);
             }
-            return 7450573836; // بر اساس تصویر آخر شما، آیدی تست روی این مقدار تنظیم شد
+            return 7450573836; // آیدی عددی تاییدشده‌ی شما جهت لود تست اولیه
         }
 
         async function checkInitialSubscription() {
