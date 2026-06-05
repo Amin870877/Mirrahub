@@ -39,6 +39,7 @@
 
     <div class="w-full max-w-md h-full bg-slate-50 dark:bg-black text-slate-800 dark:text-zinc-100 relative flex flex-col shadow-2xl border-x border-slate-200 dark:border-zinc-900">
         
+        <!-- هدر اصلی برنامه -->
         <header class="px-5 py-4 flex items-center justify-between border-b border-slate-200 dark:border-zinc-900 bg-white/90 dark:bg-black/90 backdrop-blur-md z-40 shrink-0">
             <div class="flex items-center space-x-2.5">
                 <div class="h-2.5 w-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.6)] animate-pulse"></div>
@@ -51,6 +52,7 @@
             </div>
         </header>
 
+        <!-- بخش صفحه اصلی ابزارها و خانه -->
         <main id="screen-home" class="flex-1 px-5 pt-5 pb-28 overflow-y-auto no-scrollbar block">
             
             <div class="bg-gradient-to-br from-white to-slate-100 dark:from-zinc-900 dark:to-zinc-950 rounded-[2rem] p-6 border border-slate-200 dark:border-zinc-800 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] dark:shadow-none relative overflow-hidden mb-6">
@@ -63,6 +65,7 @@
                 </div>
             </div>
 
+            <!-- باکس سرور و جستجو -->
             <div class="relative mb-6 shadow-sm rounded-full">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-slate-400 dark:text-zinc-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -70,8 +73,10 @@
                 <input type="text" id="searchInput" oninput="executeLiveSearch()" placeholder="Поиск инструментов..." class="w-full bg-white dark:bg-zinc-900/50 text-sm font-medium text-slate-900 dark:text-zinc-200 pl-12 pr-5 py-4 rounded-full border border-slate-200 dark:border-zinc-800 focus:border-red-500 dark:focus:border-red-600 focus:ring-4 focus:ring-red-500/10 dark:focus:ring-red-600/10 focus:outline-none placeholder-slate-400 dark:placeholder-zinc-600 shadow-[0_5px_20px_-10px_rgba(0,0,0,0.05)] dark:shadow-none">
             </div>
 
+            <!-- دسته‌بندی‌ها -->
             <div class="flex space-x-2.5 overflow-x-auto no-scrollbar mb-8 pb-1" id="categoriesContainer"></div>
 
+            <!-- پاپ آپ نوتیفیکیشن‌های سیستم -->
             <div id="systemAlertBadge" class="hidden bg-red-50 dark:bg-zinc-900 border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-500 rounded-2xl p-4 text-xs font-semibold flex items-center justify-between mb-6 shadow-sm">
                 <span id="systemAlertText" class="mono-font">Уведомление</span>
                 <button onclick="this.parentElement.classList.add('hidden')" class="text-red-400 dark:text-zinc-500 hover:text-red-700 dark:hover:text-white p-1">✕</button>
@@ -82,8 +87,10 @@
                 <span class="bg-slate-200 dark:bg-zinc-900 text-slate-600 dark:text-zinc-300 border border-slate-300 dark:border-zinc-800 text-[10px] font-bold px-3 py-1 rounded-full mono-font" id="totalToolsCount">0</span>
             </div>
 
+            <!-- گرید دینامیک ابزارها -->
             <div class="grid grid-cols-2 gap-3.5 mb-8" id="toolsDynamicGrid"></div>
 
+            <!-- بخش رفرال‌ها -->
             <div class="bg-white dark:bg-zinc-900/30 rounded-[2rem] p-5 border border-slate-200 dark:border-zinc-900 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] dark:shadow-none mb-4">
                 <div class="flex justify-between items-center mb-5">
                     <div>
@@ -99,6 +106,7 @@
             </div>
         </main>
 
+        <!-- صفحه اختصاصی تسک‌ها و عضویت اجباری کانال -->
         <main id="screen-tasks" class="flex-1 px-5 pt-5 pb-28 overflow-y-auto no-scrollbar hidden">
             <div class="mb-6">
                 <h2 id="txt-tasks-title" class="text-xl font-extrabold text-slate-900 dark:text-white tracking-wide mono-font">Выполнение заданий</h2>
@@ -106,6 +114,7 @@
             </div>
 
             <div class="space-y-4">
+                <!-- کارت تسک بررسی کانال -->
                 <div class="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-zinc-900 p-5 rounded-[1.5rem] flex flex-col justify-between shadow-sm">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center space-x-3">
@@ -132,6 +141,7 @@
             </div>
         </main>
 
+        <!-- منوی ناوبری (پایین صفحه) -->
         <nav class="absolute bottom-0 left-0 right-0 border-t border-slate-200 dark:border-zinc-900 pt-3 pb-safe px-4 flex justify-between items-center z-40 bg-white/90 dark:bg-black/90 backdrop-blur-xl">
             <button class="nav-button flex flex-col items-center space-y-1.5 text-red-600 dark:text-red-500 w-14" onclick="handleNavigationSwitch(this, 'home')">
                 <div class="p-2 rounded-2xl bg-red-50 dark:bg-red-500/10 mb-0.5 active-bg-holder transition-colors">
@@ -159,8 +169,10 @@
             </button>
         </nav>
 
+        <!-- بلک‌دراپ پس‌زمینه مودال‌های جزئیات ابزار -->
         <div id="modalBackdrop" class="absolute inset-0 bg-slate-900/60 dark:bg-black/80 z-50 hidden transition-opacity duration-300 opacity-0 backdrop-blur-sm" onclick="closeDetailBottomSheet()"></div>
 
+        <!-- باتم‌شیت نمایش جزئیات و لایسنس ابزارها -->
         <div id="detailBottomSheet" class="absolute bottom-0 left-0 right-0 bg-white dark:bg-zinc-950 border-t border-slate-200 dark:border-zinc-800 rounded-t-[2.5rem] p-6 z-[60] transform translate-y-full transition-transform duration-400 ease-out shadow-[0_-20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
             <div class="pb-safe">
                 <div class="w-12 h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-full mx-auto mb-6"></div>
@@ -183,6 +195,7 @@
         </div>
     </div>
 
+    <!-- مودال قفل و جوین اجباری لود اولیه پروژه -->
     <div id="forceJoinModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md hidden">
         <div class="bg-white dark:bg-zinc-900 p-8 rounded-[2rem] text-center max-w-xs border border-slate-200 dark:border-zinc-800 shadow-2xl">
             <h2 class="text-xl font-bold text-red-500 mb-4">Доступ ограничен</h2>
@@ -192,6 +205,7 @@
         </div>
     </div>
 
+    <!-- اسکریپت کنترلر سیستم -->
     <script>
         let currentLang = 'ru';
         let activeCategory = 'all';
@@ -199,8 +213,8 @@
         let activeRefTab = 'week';
         let isDarkMode = true;
         
-        // آدرس اندپوینت سرور ریلوای شما
-        const BACKEND_URL = "https://mirrabacked-production.up.railway.app/check-join";
+        // آدرس اندپوینت سرور فعال و تایید شده شما روی ریل‌وی
+        const BACKEND_URL = "https://ed-production.up.railway.app/check-join";
 
         const localizationData = {
             ru: {
@@ -262,7 +276,7 @@
             } catch (e) {
                 console.error("Error reading Telegram Data:", e);
             }
-            return 123456789; // شناسه تست برای شبیه‌ساز مرورگر
+            return 123456789; // شناسه عددی تست پیش‌فرض برای شبیه‌ساز مرورگر کامپیوتر
         }
 
         // بررسی وضعیت عضویت در زمان باز شدن اولیه مینی‌اپ
